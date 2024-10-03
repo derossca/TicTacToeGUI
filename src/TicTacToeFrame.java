@@ -38,6 +38,11 @@ public class TicTacToeFrame extends JFrame {
             }
         }
 
+        JButton quitBtn = new JButton("Quit");
+        quitBtn.setFont(new Font("Arial", Font.BOLD, 22));
+        quitBtn.addActionListener(e -> System.exit(0));
+        add(quitBtn, BorderLayout.SOUTH);
+
         setVisible(true);
     }
 
