@@ -1,7 +1,9 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
 
-public class TicTacToeFrame {
+public class TicTacToeFrame extends JFrame {
 
     //Fields and variables
     JPanel mainPanel;
@@ -26,10 +28,44 @@ public class TicTacToeFrame {
 
     public TicTacToeFrame() {
 
+        createCenterFrame();
+
+        setTitle("Tic Tac Toe");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+
+        createButtonPanel();
+        initializeBoard();
+
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+
+        JButton quitBtn = new JButton("Quit");
+        quitBtn.addActionListener(e -> System.exit(0));
+        mainPanel.add(quitBtn, BorderLayout.SOUTH);
+
+        add(mainPanel);
+    }
+
+    //creating panel for buttons and game to be played with them
+    private void createButtonPanel () {
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(ROW, COL));
+        buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+
     }
 
     //methods for the game, checking wins, clearing and initializing board
     private void clearBoard() {
+        for (int row = 0; row < ROW; row++) {
+            for (int col = 0; col < COL; col++) {
+                board[row][col] = " ";
+            }
+        }
+    }
+
+    private void initializeBoard() {
         for (int row = 0; row < ROW; row++) {
             for (int col = 0; col < COL; col++) {
                 board[row][col] = " ";
@@ -196,4 +232,17 @@ public class TicTacToeFrame {
         // Checked every vector so I know I have a tie
         return true;
     }
+
+    private void createCenterFrame(){
+        //screen dimensions
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+        //center frame
+        setSize(screenWidth * 3 / 4, screenHeight * 3 / 4);
+        setLocation(screenWidth / 8, screenHeight / 8);
+    }
+
+
 }
