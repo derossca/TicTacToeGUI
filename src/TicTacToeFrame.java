@@ -9,7 +9,100 @@ import java.util.Scanner;
 public class TicTacToeFrame extends JFrame {
 
     //Fields and variables
+    private static final int ROW = 3;
+    private static final int COL = 3;
+    private JButton[][] gameButtons = new JButton[ROW][COL];
+    private String player = "X";
+    private static String[][] board = new String[ROW][COL];
 
+    public TicTacToeFrame()
+    {
+        setTitle("Tic Tac Toe");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        createCenterFrame();
+        setLayout(new GridLayout(ROW, COL));
+        ActionListener buttonListener = new ButtonListener();
+
+        // Initialize the GUI board and the logical board
+        for (int r = 0; r < ROW; r++)
+        {
+            for (int c = 0; c < COL; c++)
+            {
+                board[r][c] = " ";
+                JButton gameBtn = new JButton();
+                gameButtons[r][c] = gameBtn;
+                gameBtn.setFont(new Font("Arial", Font.BOLD, 48));
+                gameBtn.setActionCommand(r + "," + c);
+                gameBtn.addActionListener(buttonListener);
+                add(gameBtn);
+            }
+        }
+
+        setVisible(true);
+    }
+
+    private class ButtonListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            String command = e.getActionCommand();
+            int row = Integer.parseInt(command.split(",")[0]);
+            int col = Integer.parseInt(command.split(",")[1]);
+            JButton gameBtn = gameButtons[row][col];
+
+            if (!gameBtn.getText().equals(""))
+            {
+                JOptionPane.showMessageDialog(null, "Invalid move! Please select another space!");
+                return;
+            }
+
+            if (gameBtn.getText().equals("") && !gameOver())
+            {
+                board[row][col] = player;
+                gameBtn.setText(player);
+                if (isWin(player))
+                {
+                    JOptionPane.showMessageDialog(null, "Player " + player + " wins!");
+                    int playAgain = JOptionPane.showConfirmDialog(null, "Play Again?!", "Game Over", JOptionPane.YES_NO_OPTION);
+                    if (playAgain == JOptionPane.YES_OPTION)
+                    {
+                        resetGame();
+                    } else {
+                        System.exit(0);
+                    }
+                } else if (isTie()) {
+                    JOptionPane.showMessageDialog(null, "The game is a tie!");
+                    int playAgain = JOptionPane.showConfirmDialog(null, "Play again?", "Game Over", JOptionPane.YES_NO_OPTION);
+                    if (playAgain == JOptionPane.YES_OPTION)
+                    {
+                        resetGame();
+                    } else {
+                        System.exit(0);
+                    }
+                } else {
+                    player = player.equals("X") ? "O" : "X";
+                }
+            }
+        }
+    }
+
+    private boolean gameOver()
+    {
+        return isWin("X") || isWin("O") || isTie();
+    }
+
+    private void resetGame()
+    {
+        for (int r = 0; r < ROW; r++)
+        {
+            for (int c = 0; c < COL; c++)
+            {
+                board[r][c] = " ";
+                gameButtons[r][c].setText("");
+            }
+        }
+    }
 
 
     //methods for the game, checking wins, clearing and initializing board
