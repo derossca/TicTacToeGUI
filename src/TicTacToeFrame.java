@@ -17,10 +17,13 @@ public class TicTacToeFrame extends JFrame {
 
     public TicTacToeFrame()
     {
+        //Setting up the frame and frame position on screen
         setTitle("Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         createCenterFrame();
         setLayout(new BorderLayout());
+
+        //Action listener for the game buttons
         ActionListener buttonListener = new ButtonListener();
 
         // Initialize the GUI board and the logical board
@@ -41,15 +44,18 @@ public class TicTacToeFrame extends JFrame {
             }
         }
 
+        //Quit button
         JButton quitBtn = new JButton("Quit");
         quitBtn.setFont(new Font("Arial", Font.BOLD, 22));
         quitBtn.addActionListener(e -> System.exit(0));
 
+        //Adding panel and quit button to the game and their relative positions
         add(buttonPanel, BorderLayout.CENTER);
         add(quitBtn, BorderLayout.SOUTH);
         setVisible(true);
     }
 
+    //Button Listerner class that implements ActionListener for game button functionality
     private class ButtonListener implements ActionListener
     {
         @Override
@@ -96,11 +102,13 @@ public class TicTacToeFrame extends JFrame {
         }
     }
 
+    //if game is over is true, a tie or win
     private boolean gameOver()
     {
         return isWin("X") || isWin("O") || isTie();
     }
 
+    //resets the game
     private void resetGame()
     {
         for (int r = 0; r < ROW; r++)
@@ -293,6 +301,7 @@ public class TicTacToeFrame extends JFrame {
         return true;
     }
 
+    //Centers the frame on the screen
     private void createCenterFrame(){
         //screen dimensions
         Toolkit toolkit = Toolkit.getDefaultToolkit();
