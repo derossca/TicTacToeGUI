@@ -108,6 +108,7 @@ public class TicTacToeFrame extends JFrame {
             for (int c = 0; c < COL; c++)
             {
                 board[r][c] = " ";
+                player = "X";
                 gameButtons[r][c].setText("");
             }
         }
