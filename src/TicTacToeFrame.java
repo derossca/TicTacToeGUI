@@ -20,10 +20,13 @@ public class TicTacToeFrame extends JFrame {
         setTitle("Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         createCenterFrame();
-        setLayout(new GridLayout(ROW, COL));
+        setLayout(new BorderLayout());
         ActionListener buttonListener = new ButtonListener();
 
         // Initialize the GUI board and the logical board
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(ROW, COL));
+
         for (int r = 0; r < ROW; r++)
         {
             for (int c = 0; c < COL; c++)
@@ -34,15 +37,16 @@ public class TicTacToeFrame extends JFrame {
                 gameBtn.setFont(new Font("Arial", Font.BOLD, 48));
                 gameBtn.setActionCommand(r + "," + c);
                 gameBtn.addActionListener(buttonListener);
-                add(gameBtn);
+                buttonPanel.add(gameBtn);
             }
         }
 
         JButton quitBtn = new JButton("Quit");
         quitBtn.setFont(new Font("Arial", Font.BOLD, 22));
         quitBtn.addActionListener(e -> System.exit(0));
-        add(quitBtn, BorderLayout.SOUTH);
 
+        add(buttonPanel, BorderLayout.CENTER);
+        add(quitBtn, BorderLayout.SOUTH);
         setVisible(true);
     }
 
